@@ -1,0 +1,1 @@
+import"./hoisted.ChRvRewF.js";const n=document.getElementById("sakuraContainer"),s=20;for(let t=0;t<s;t++){const a=document.createElement("div");a.className="sakura",a.style.left=Math.random()*100+"%",a.style.animationDuration=Math.random()*6+6+"s",a.style.animationDelay=Math.random()*8+"s";const e=Math.random()*8+8;a.style.width=e+"px",a.style.height=e+"px",n.appendChild(a)}
