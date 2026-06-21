@@ -229,6 +229,13 @@
     position: relative;
     z-index: 1;
 }
+
+/* MetingJS 加载提示 */
+.meting-loading {
+    text-align: center;
+    padding: 40px;
+    color: #7dd3fc;
+}
 </style>
 </head>
 
@@ -259,8 +266,10 @@
     <!-- 歌单标题 -->
     <div class="playlist-custom-title">📋 我的歌单</div>
     
-    <!-- APlayer 播放器 -->
-    <div id="aplayer"></div>
+    <!-- 播放器容器 -->
+    <div id="aplayer-container">
+        <div class="meting-loading">🎵 歌曲加载中...</div>
+    </div>
     
     <!-- 温馨提示 -->
     <div style="text-align: center; padding: 20px; color: #7dd3fc; font-size: 13px; background: rgba(125, 211, 252, 0.1); border-radius: 12px; margin-top: 20px;">
@@ -285,42 +294,22 @@
 
 <!-- 播放器初始化 -->
 <script>
+// 4首酷狗歌曲的 hash 值
+const songHashes = [
+    'e4c3a6a84ac54ae42eebbdff54a082e8',
+    '96defb77f5d3a92d83f655c5d0f23204',
+    '44d6df355be22085acbd970b88c95a44',
+    '3e8ee1770a6bc702b117b829edff9ca3'
+];
+
+// Meting API 地址
+const metingApi = 'https://meting.jinghuashang.cn/api';
+
 // 等待页面加载完成
 document.addEventListener('DOMContentLoaded', function() {
-    // 4首酷狗歌曲的 hash 值
-    const songs = [
-        {
-            id: 'e4c3a6a84ac54ae42eebbdff54a082e8',
-            name: '歌曲1',
-            artist: '歌手1'
-        },
-        {
-            id: '96defb77f5d3a92d83f655c5d0f23204',
-            name: '歌曲2',
-            artist: '歌手2'
-        },
-        {
-            id: '44d6df355be22085acbd970b88c95a44',
-            name: '歌曲3',
-            artist: '歌手3'
-        },
-        {
-            id: '3e8ee1770a6bc702b117b829edff9ca3',
-            name: '歌曲4',
-            artist: '歌手4'
-        }
-    ];
-
-    // 使用 Meting API 获取歌曲信息并初始化播放器
-    const apiBase = 'https://api.injahow.cn/meting/';
-    
-    // 构建音频列表
-    const audioList = [];
-    let loadedCount = 0;
-
     // 先创建播放器
     const ap = new APlayer({
-        container: document.getElementById('aplayer'),
+        container: document.getElementById('aplayer-container'),
         mini: false,
         autoplay: false,
         theme: '#38bdf8',
@@ -335,71 +324,86 @@ document.addEventListener('DOMContentLoaded', function() {
         audio: []
     });
 
-    // 逐首加载歌曲信息
-    songs.forEach((song, index) => {
-        // 获取歌曲详情
-        fetch(`${apiBase}?server=kugou&type=song&id=${song.id}`)
+    // 逐首加载歌曲
+    let loadedCount = 0;
+    const audioList = [];
+
+    songHashes.forEach((hash, index) => {
+        fetch(`${metingApi}?server=kugou&type=song&id=${hash}`)
             .then(response => response.json())
             .then(data => {
                 if (data && data.length > 0) {
-                    const songData = data[0];
+                    const song = data[0];
+                    // 修复URL中的转义字符
+                    let audioUrl = song.url;
+                    if (audioUrl) {
+                        audioUrl = audioUrl.replace(/\\\//g, '/');
+                        // 确保是 https
+                        if (audioUrl.startsWith('http://')) {
+                            audioUrl = 'https://' + audioUrl.slice(7);
+                        }
+                    }
+                    
+                    let coverUrl = song.pic;
+                    if (coverUrl) {
+                        coverUrl = coverUrl.replace(/\\\//g, '/');
+                        if (coverUrl.startsWith('http://')) {
+                            coverUrl = 'https://' + coverUrl.slice(7);
+                        }
+                    }
+                    
+                    let lrcUrl = song.lrc;
+                    if (lrcUrl) {
+                        lrcUrl = lrcUrl.replace(/\\\//g, '/');
+                        if (lrcUrl.startsWith('http://')) {
+                            lrcUrl = 'https://' + lrcUrl.slice(7);
+                        }
+                    }
+                    
                     audioList[index] = {
-                        name: songData.name || song.name,
-                        artist: songData.artist || song.artist,
-                        url: songData.url,
-                        cover: songData.pic,
-                        lrc: songData.lrc || ''
-                    };
-                } else {
-                    // 备用方案：直接构造URL
-                    audioList[index] = {
-                        name: song.name,
-                        artist: song.artist,
-                        url: `${apiBase}?type=url&server=kugou&id=${song.id}`,
-                        cover: `${apiBase}?type=pic&server=kugou&id=${song.id}`,
-                        lrc: ''
+                        name: song.name || '未知歌曲',
+                        artist: song.artist || '未知歌手',
+                        url: audioUrl,
+                        cover: coverUrl,
+                        lrc: lrcUrl || ''
                     };
                 }
-                
+            })
+            .catch(error => {
+                console.error('加载歌曲失败:', error);
+            })
+            .finally(() => {
                 loadedCount++;
-                if (loadedCount === songs.length) {
+                if (loadedCount === songHashes.length) {
                     // 所有歌曲加载完成，添加到播放器
                     audioList.forEach(audio => {
                         if (audio && audio.url) {
                             ap.list.add(audio);
                         }
                     });
-                }
-            })
-            .catch(error => {
-                console.error('加载歌曲失败:', error);
-                // 出错时使用备用方案
-                audioList[index] = {
-                    name: song.name,
-                    artist: song.artist,
-                    url: `${apiBase}?type=url&server=kugou&id=${song.id}`,
-                    cover: `${apiBase}?type=pic&server=kugou&id=${song.id}`,
-                    lrc: ''
-                };
-                
-                loadedCount++;
-                if (loadedCount === songs.length) {
-                    audioList.forEach(audio => {
-                        if (audio && audio.url) {
-                            ap.list.add(audio);
-                        }
-                    });
+                    
+                    // 移除加载提示
+                    const loadingEl = document.querySelector('.meting-loading');
+                    if (loadingEl) {
+                        loadingEl.style.display = 'none';
+                    }
                 }
             });
     });
 
     // 播放状态变化时更新封面动画
     ap.on('play', function() {
-        document.querySelector('.aplayer-pic')?.classList.add('playing');
+        const pic = document.querySelector('.aplayer-pic');
+        if (pic) {
+            pic.style.animationPlayState = 'running';
+        }
     });
     
     ap.on('pause', function() {
-        document.querySelector('.aplayer-pic')?.classList.remove('playing');
+        const pic = document.querySelector('.aplayer-pic');
+        if (pic) {
+            pic.style.animationPlayState = 'paused';
+        }
     });
 });
 </script>
