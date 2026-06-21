@@ -104,6 +104,26 @@ nav[data-astro-cid-3ef6ksr2] h2 a[data-astro-cid-3ef6ksr2]{color:#fff!important;
 </div>
 
 <script>
+// 樱花飘落特效（直接放在页面里，确保能执行）
+(function() {
+  const petalContainer = document.getElementById("petalContainer");
+  if (!petalContainer) return;
+  
+  const petalCount = 35;
+  for (let i = 0; i < petalCount; i++) {
+    const petal = document.createElement("div");
+    petal.className = "petal";
+    petal.setAttribute("data-astro-cid-j7pv25f6", "");
+    petal.style.left = Math.random() * 100 + "%";
+    petal.style.animationDuration = (Math.random() * 6 + 6) + "s";
+    petal.style.animationDelay = Math.random() * 8 + "s";
+    const size = Math.random() * 8 + 8;
+    petal.style.width = size + "px";
+    petal.style.height = size + "px";
+    petalContainer.appendChild(petal);
+  }
+})();
+
 // 头像彩蛋：秘密小窝菜单
 let clickCount = 0;
 let menuOpen = false;
@@ -121,41 +141,45 @@ window.addEventListener('load', function() {
   }
 });
 
-// 头像点击事件（事件委托，更可靠）
-document.addEventListener('click', function(e) {
-  const avatar = e.target.closest('.avatar');
+// 头像点击事件（直接绑定到头像元素，更可靠）
+window.addEventListener('load', function() {
+  const avatar = document.querySelector('.avatar');
   if (!avatar) return;
   
-  if (menuOpen) {
-    closeSecretMenu();
-    return;
-  }
-  
-  // 3秒内不点击就重置计数
-  clearTimeout(clickTimer);
-  clickTimer = setTimeout(() => {
-    clickCount = 0;
-    avatar.classList.remove('avatar-glow');
-  }, 3000);
-  
-  clickCount++;
-  
-  // 点击缩放动画
-  avatar.classList.remove('avatar-click');
-  void avatar.offsetWidth;
-  avatar.classList.add('avatar-click');
-  
-  // 第3次点击：开始发光
-  if (clickCount === 3) {
-    avatar.classList.add('avatar-glow');
-  }
-  
-  // 第6次点击：打开秘密菜单！
-  if (clickCount >= 6) {
-    openSecretMenu();
-    clickCount = 0;
-    avatar.classList.remove('avatar-glow');
-  }
+  avatar.addEventListener('click', function(e) {
+    e.stopPropagation();
+    
+    if (menuOpen) {
+      closeSecretMenu();
+      return;
+    }
+    
+    // 3秒内不点击就重置计数
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => {
+      clickCount = 0;
+      avatar.classList.remove('avatar-glow');
+    }, 3000);
+    
+    clickCount++;
+    
+    // 点击缩放动画
+    avatar.classList.remove('avatar-click');
+    void avatar.offsetWidth;
+    avatar.classList.add('avatar-click');
+    
+    // 第3次点击：开始发光
+    if (clickCount === 3) {
+      avatar.classList.add('avatar-glow');
+    }
+    
+    // 第6次点击：打开秘密菜单！
+    if (clickCount >= 6) {
+      openSecretMenu();
+      clickCount = 0;
+      avatar.classList.remove('avatar-glow');
+    }
+  });
 });
 
 // 打开秘密菜单
