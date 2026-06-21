@@ -307,26 +307,9 @@ const metingApi = 'https://api.i-meto.com/meting/api';
 
 // 等待页面加载完成
 document.addEventListener('DOMContentLoaded', function() {
-    // 先创建播放器
-    const ap = new APlayer({
-        container: document.getElementById('aplayer-container'),
-        mini: false,
-        autoplay: false,
-        theme: '#38bdf8',
-        loop: 'all',
-        order: 'list',
-        preload: 'auto',
-        volume: 0.7,
-        mutex: true,
-        listFolded: false,
-        listMaxHeight: '300px',
-        lrcType: 0,
-        audio: []
-    });
-
     // 逐首加载歌曲
-    let loadedCount = 0;
     const audioList = [];
+    let loadedCount = 0;
 
     songIds.forEach((id, index) => {
         fetch(`${metingApi}?server=netease&type=song&id=${id}`)
@@ -379,11 +362,23 @@ document.addEventListener('DOMContentLoaded', function() {
             .finally(() => {
                 loadedCount++;
                 if (loadedCount === songIds.length) {
-                    // 所有歌曲加载完成，添加到播放器
-                    audioList.forEach(audio => {
-                        if (audio && audio.url) {
-                            ap.list.add(audio);
-                        }
+                    // 所有歌曲加载完成，创建播放器
+                    const validAudioList = audioList.filter(audio => audio && audio.url);
+                    
+                    const ap = new APlayer({
+                        container: document.getElementById('aplayer-container'),
+                        mini: false,
+                        autoplay: false,
+                        theme: '#38bdf8',
+                        loop: 'all',
+                        order: 'list',
+                        preload: 'auto',
+                        volume: 0.7,
+                        mutex: true,
+                        listFolded: false,
+                        listMaxHeight: '300px',
+                        lrcType: 0,
+                        audio: validAudioList
                     });
                     
                     // 移除加载提示
@@ -391,6 +386,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (loadingEl) {
                         loadingEl.style.display = 'none';
                     }
+                    
+                    // 播放状态变化时更新封面动画
+                    ap.on('play', function() {
+                        const pic = document.querySelector('.aplayer-pic');
+                        if (pic) {
+                            pic.style.animationPlayState = 'running';
+                        }
+                    });
+                    
+                    ap.on('pause', function() {
+                        const pic = document.querySelector('.aplayer-pic');
+                        if (pic) {
+                            pic.style.animationPlayState = 'paused';
+                        }
+                    });
                 }
             });
     });
