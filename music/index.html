@@ -404,21 +404,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
     });
-
-    // 播放状态变化时更新封面动画
-    ap.on('play', function() {
-        const pic = document.querySelector('.aplayer-pic');
-        if (pic) {
-            pic.style.animationPlayState = 'running';
-        }
-    });
-    
-    ap.on('pause', function() {
-        const pic = document.querySelector('.aplayer-pic');
-        if (pic) {
-            pic.style.animationPlayState = 'paused';
-        }
-    });
 });
 </script>
 
