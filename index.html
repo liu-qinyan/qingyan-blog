@@ -98,214 +98,222 @@
 
 <script>
 // 头像彩蛋：秘密小窝菜单
-const avatar = document.querySelector('.avatar');
-let clickCount = 0;
-let menuOpen = false;
-let clickTimer = null;
+document.addEventListener('DOMContentLoaded', function() {
+  const avatar = document.querySelector('.avatar');
+  if (!avatar) return;
+  
+  let clickCount = 0;
+  let menuOpen = false;
+  let clickTimer = null;
 
-// 菜单元素
-const secretMenuOverlay = document.getElementById('secretMenuOverlay');
-const secretMenu = document.getElementById('secretMenu');
-const secretMenuClose = document.getElementById('secretMenuClose');
-const menuItems = document.querySelectorAll('.menu-item');
-const secretVisitorCount = document.getElementById('secretVisitorCount');
+  // 菜单元素
+  const secretMenuOverlay = document.getElementById('secretMenuOverlay');
+  const secretMenu = document.getElementById('secretMenu');
+  const secretMenuClose = document.getElementById('secretMenuClose');
+  const menuItems = document.querySelectorAll('.menu-item');
+  const secretVisitorCount = document.getElementById('secretVisitorCount');
 
-// 已激活的模式
-const activeModes = new Set();
+  // 已激活的模式
+  const activeModes = new Set();
 
-// 随机显示"第N位发现者"
-const randomVisitor = Math.floor(Math.random() * 500) + 100;
-secretVisitorCount.textContent = randomVisitor;
-
-// 头像点击事件
-avatar.addEventListener('click', () => {
-  if (menuOpen) {
-    closeSecretMenu();
-    return;
+  // 随机显示"第N位发现者"
+  if (secretVisitorCount) {
+    const randomVisitor = Math.floor(Math.random() * 500) + 100;
+    secretVisitorCount.textContent = randomVisitor;
   }
-  
-  // 3秒内不点击就重置计数
-  clearTimeout(clickTimer);
-  clickTimer = setTimeout(() => {
-    clickCount = 0;
-    avatar.classList.remove('avatar-glow');
-  }, 3000);
-  
-  clickCount++;
-  
-  // 点击缩放动画
-  avatar.classList.remove('avatar-click');
-  void avatar.offsetWidth;
-  avatar.classList.add('avatar-click');
-  
-  // 第3次点击：开始发光
-  if (clickCount === 3) {
-    avatar.classList.add('avatar-glow');
-  }
-  
-  // 第6次点击：打开秘密菜单！
-  if (clickCount >= 6) {
-    openSecretMenu();
-    clickCount = 0;
-    avatar.classList.remove('avatar-glow');
-  }
-});
 
-// 打开秘密菜单
-function openSecretMenu() {
-  menuOpen = true;
-  secretMenuOverlay.classList.add('active');
-  
-  setTimeout(() => {
-    secretMenu.classList.add('active');
-  }, 100);
-  
-  // 看板娘说特殊的话
-  const live2dTip = document.getElementById('live2dTip');
-  if (live2dTip) {
-    setTimeout(() => {
-      live2dTip.textContent = '哇！你发现了秘密菜单！✨';
-    }, 300);
-  }
-}
-
-// 关闭秘密菜单
-function closeSecretMenu() {
-  menuOpen = false;
-  secretMenu.classList.remove('active');
-  
-  setTimeout(() => {
-    secretMenuOverlay.classList.remove('active');
-  }, 300);
-  
-  // 重置看板娘
-  const live2dTip = document.getElementById('live2dTip');
-  if (live2dTip) {
-    setTimeout(() => {
-      live2dTip.textContent = '欢迎来到柳卿烟的小窝～';
-    }, 500);
-  }
-}
-
-// 关闭按钮
-secretMenuClose.addEventListener('click', closeSecretMenu);
-
-// 点击遮罩层关闭
-secretMenuOverlay.addEventListener('click', (e) => {
-  if (e.target === secretMenuOverlay) {
-    closeSecretMenu();
-  }
-});
-
-// 菜单项点击事件
-menuItems.forEach(item => {
-  item.addEventListener('click', () => {
-    const mode = item.dataset.mode;
+  // 头像点击事件
+  avatar.addEventListener('click', () => {
+    if (menuOpen) {
+      closeSecretMenu();
+      return;
+    }
     
-    if (activeModes.has(mode)) {
-      // 关闭模式
-      activeModes.delete(mode);
-      item.classList.remove('active');
-      item.querySelector('.menu-item-toggle').textContent = '○';
-      deactivateMode(mode);
-    } else {
-      // 开启模式
-      activeModes.add(mode);
-      item.classList.add('active');
-      item.querySelector('.menu-item-toggle').textContent = '✓';
-      activateMode(mode);
+    // 3秒内不点击就重置计数
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => {
+      clickCount = 0;
+      avatar.classList.remove('avatar-glow');
+    }, 3000);
+    
+    clickCount++;
+    
+    // 点击缩放动画
+    avatar.classList.remove('avatar-click');
+    void avatar.offsetWidth;
+    avatar.classList.add('avatar-click');
+    
+    // 第3次点击：开始发光
+    if (clickCount === 3) {
+      avatar.classList.add('avatar-glow');
+    }
+    
+    // 第6次点击：打开秘密菜单！
+    if (clickCount >= 6) {
+      openSecretMenu();
+      clickCount = 0;
+      avatar.classList.remove('avatar-glow');
     }
   });
+
+  // 打开秘密菜单
+  function openSecretMenu() {
+    menuOpen = true;
+    if (secretMenuOverlay) secretMenuOverlay.classList.add('active');
+    
+    setTimeout(() => {
+      if (secretMenu) secretMenu.classList.add('active');
+    }, 100);
+    
+    // 看板娘说特殊的话
+    const live2dTip = document.getElementById('live2dTip');
+    if (live2dTip) {
+      setTimeout(() => {
+        live2dTip.textContent = '哇！你发现了秘密菜单！✨';
+      }, 300);
+    }
+  }
+
+  // 关闭秘密菜单
+  function closeSecretMenu() {
+    menuOpen = false;
+    if (secretMenu) secretMenu.classList.remove('active');
+    
+    setTimeout(() => {
+      if (secretMenuOverlay) secretMenuOverlay.classList.remove('active');
+    }, 300);
+    
+    // 重置看板娘
+    const live2dTip = document.getElementById('live2dTip');
+    if (live2dTip) {
+      setTimeout(() => {
+        live2dTip.textContent = '欢迎来到柳卿烟的小窝～';
+      }, 500);
+    }
+  }
+
+  // 关闭按钮
+  if (secretMenuClose) {
+    secretMenuClose.addEventListener('click', closeSecretMenu);
+  }
+
+  // 点击遮罩层关闭
+  if (secretMenuOverlay) {
+    secretMenuOverlay.addEventListener('click', (e) => {
+      if (e.target === secretMenuOverlay) {
+        closeSecretMenu();
+      }
+    });
+  }
+
+  // 菜单项点击事件
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const mode = item.dataset.mode;
+      
+      if (activeModes.has(mode)) {
+        // 关闭模式
+        activeModes.delete(mode);
+        item.classList.remove('active');
+        const toggle = item.querySelector('.menu-item-toggle');
+        if (toggle) toggle.textContent = '○';
+        deactivateMode(mode);
+      } else {
+        // 开启模式
+        activeModes.add(mode);
+        item.classList.add('active');
+        const toggle = item.querySelector('.menu-item-toggle');
+        if (toggle) toggle.textContent = '✓';
+        activateMode(mode);
+      }
+    });
+  });
+
+  // 激活模式
+  function activateMode(mode) {
+    switch(mode) {
+      case 'sakura-burst':
+        document.body.classList.add('sakura-burst');
+        break;
+      case 'rainbow':
+        document.body.classList.add('rainbow-mode');
+        break;
+      case 'star':
+        document.body.classList.add('star-mode');
+        break;
+      case 'live2d-big':
+        document.body.classList.add('live2d-big');
+        break;
+      case 'click-burst':
+        document.body.classList.add('click-burst-mode');
+        break;
+      case 'random-color':
+        randomizeThemeColor();
+        break;
+    }
+  }
+
+  // 取消模式
+  function deactivateMode(mode) {
+    switch(mode) {
+      case 'sakura-burst':
+        document.body.classList.remove('sakura-burst');
+        break;
+      case 'rainbow':
+        document.body.classList.remove('rainbow-mode');
+        break;
+      case 'star':
+        document.body.classList.remove('star-mode');
+        break;
+      case 'live2d-big':
+        document.body.classList.remove('live2d-big');
+        break;
+      case 'click-burst':
+        document.body.classList.remove('click-burst-mode');
+        break;
+      case 'random-color':
+        resetThemeColor();
+        break;
+    }
+  }
+
+  // 随机主题色
+  function randomizeThemeColor() {
+    const colorPalettes = [
+      { primary: '#f472b6', secondary: '#f9a8d4', dark: '#be185d' }, // 粉色
+      { primary: '#a78bfa', secondary: '#c4b5fd', dark: '#6d28d9' }, // 紫色
+      { primary: '#34d399', secondary: '#6ee7b7', dark: '#047857' }, // 绿色
+      { primary: '#fbbf24', secondary: '#fcd34d', dark: '#b45309' }, // 金色
+      { primary: '#fb923c', secondary: '#fdba74', dark: '#c2410c' }, // 橙色
+      { primary: '#22d3ee', secondary: '#67e8f9', dark: '#0e7490' }, // 青色
+    ];
+    
+    const palette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
+    
+    // 先移除旧的样式
+    resetThemeColor();
+    
+    // 创建临时样式
+    const style = document.createElement('style');
+    style.id = 'random-color-style';
+    style.textContent = `
+      .card-btn, .music-btn { background: linear-gradient(135deg, ${palette.primary}, ${palette.secondary}) !important; }
+      .section-title, .card h3, .menu-item-name { color: ${palette.dark} !important; }
+      .card { border-color: ${palette.secondary}4d !important; box-shadow: 0 8px 30px ${palette.primary}26 !important; }
+      .secret-menu { border-color: ${palette.secondary}66 !important; box-shadow: 0 20px 60px ${palette.primary}4d, 0 0 80px ${palette.primary}33 !important; }
+      .menu-item.active { background: linear-gradient(135deg, ${palette.secondary}40, ${palette.primary}40) !important; border-color: ${palette.primary} !important; }
+      .secret-menu-title { color: ${palette.dark} !important; }
+      .secret-menu-subtitle { color: ${palette.primary} !important; }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function resetThemeColor() {
+    const style = document.getElementById('random-color-style');
+    if (style) {
+      style.remove();
+    }
+  }
 });
-
-// 激活模式
-function activateMode(mode) {
-  switch(mode) {
-    case 'sakura-burst':
-      document.body.classList.add('sakura-burst');
-      break;
-    case 'rainbow':
-      document.body.classList.add('rainbow-mode');
-      break;
-    case 'star':
-      document.body.classList.add('star-mode');
-      break;
-    case 'live2d-big':
-      document.body.classList.add('live2d-big');
-      break;
-    case 'click-burst':
-      // 点击特效加强：在hoisted.ChRvRewF.js里的点击特效会检测这个类
-      document.body.classList.add('click-burst-mode');
-      break;
-    case 'random-color':
-      randomizeThemeColor();
-      break;
-  }
-}
-
-// 取消模式
-function deactivateMode(mode) {
-  switch(mode) {
-    case 'sakura-burst':
-      document.body.classList.remove('sakura-burst');
-      break;
-    case 'rainbow':
-      document.body.classList.remove('rainbow-mode');
-      break;
-    case 'star':
-      document.body.classList.remove('star-mode');
-      break;
-    case 'live2d-big':
-      document.body.classList.remove('live2d-big');
-      break;
-    case 'click-burst':
-      document.body.classList.remove('click-burst-mode');
-      break;
-    case 'random-color':
-      resetThemeColor();
-      break;
-  }
-}
-
-// 随机主题色
-const originalColors = {
-  primary: '#38bdf8',
-  secondary: '#7dd3fc',
-  dark: '#0369a1'
-};
-
-function randomizeThemeColor() {
-  const colorPalettes = [
-    { primary: '#f472b6', secondary: '#f9a8d4', dark: '#be185d' }, // 粉色
-    { primary: '#a78bfa', secondary: '#c4b5fd', dark: '#6d28d9' }, // 紫色
-    { primary: '#34d399', secondary: '#6ee7b7', dark: '#047857' }, // 绿色
-    { primary: '#fbbf24', secondary: '#fcd34d', dark: '#b45309' }, // 金色
-    { primary: '#fb923c', secondary: '#fdba74', dark: '#c2410c' }, // 橙色
-    { primary: '#22d3ee', secondary: '#67e8f9', dark: '#0e7490' }, // 青色
-  ];
-  
-  const palette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
-  
-  // 创建临时样式
-  const style = document.createElement('style');
-  style.id = 'random-color-style';
-  style.textContent = `
-    .card-btn, .music-btn { background: linear-gradient(135deg, ${palette.primary}, ${palette.secondary}) !important; }
-    .section-title, .card h3, .menu-item-name { color: ${palette.dark} !important; }
-    .card { border-color: ${palette.secondary}4d !important; box-shadow: 0 8px 30px ${palette.primary}26 !important; }
-    .secret-menu { border-color: ${palette.secondary}66 !important; box-shadow: 0 20px 60px ${palette.primary}4d, 0 0 80px ${palette.primary}33 !important; }
-    .menu-item.active { background: linear-gradient(135deg, ${palette.secondary}40, ${palette.primary}40) !important; border-color: ${palette.primary} !important; }
-    .secret-menu-title { color: ${palette.dark} !important; }
-    .secret-menu-subtitle { color: ${palette.primary} !important; }
-  `;
-  document.head.appendChild(style);
-}
-
-function resetThemeColor() {
-  const style = document.getElementById('random-color-style');
-  if (style) {
-    style.remove();
-  }
-}
 </script>
   </body> </html>
