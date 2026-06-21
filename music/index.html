@@ -294,16 +294,16 @@
 
 <!-- 播放器初始化 -->
 <script>
-// 4首酷狗歌曲的 hash 值
-const songHashes = [
-    'e4c3a6a84ac54ae42eebbdff54a082e8',
-    '96defb77f5d3a92d83f655c5d0f23204',
-    '44d6df355be22085acbd970b88c95a44',
-    '3e8ee1770a6bc702b117b829edff9ca3'
+// 4首网易云音乐歌曲ID
+const songIds = [
+    '39227633',      // His Theme - Toby Fox
+    '399367387',     // 桜ノ詩 - はな
+    '509726454',     // Sunshine Girl - moumoon
+    '28151052'       // 羽根 - 折戸伸治
 ];
 
-// Meting API 地址
-const metingApi = 'https://meting.jinghuashang.cn/api';
+// Meting API 地址（网易云更稳定）
+const metingApi = 'https://api.i-meto.com/meting/api';
 
 // 等待页面加载完成
 document.addEventListener('DOMContentLoaded', function() {
@@ -328,8 +328,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let loadedCount = 0;
     const audioList = [];
 
-    songHashes.forEach((hash, index) => {
-        fetch(`${metingApi}?server=kugou&type=song&id=${hash}`)
+    songIds.forEach((id, index) => {
+        fetch(`${metingApi}?server=netease&type=song&id=${id}`)
             .then(response => response.json())
             .then(data => {
                 if (data && data.length > 0) {
@@ -360,9 +360,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }
                     
+                    // 兼容不同API的字段名
+                    const songName = song.name || song.title || '未知歌曲';
+                    const songArtist = song.artist || song.author || '未知歌手';
+                    
                     audioList[index] = {
-                        name: song.name || '未知歌曲',
-                        artist: song.artist || '未知歌手',
+                        name: songName,
+                        artist: songArtist,
                         url: audioUrl,
                         cover: coverUrl,
                         lrc: lrcUrl || ''
@@ -374,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .finally(() => {
                 loadedCount++;
-                if (loadedCount === songHashes.length) {
+                if (loadedCount === songIds.length) {
                     // 所有歌曲加载完成，添加到播放器
                     audioList.forEach(audio => {
                         if (audio && audio.url) {
