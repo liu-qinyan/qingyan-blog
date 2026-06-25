@@ -209,6 +209,7 @@ body::before {
 /* 樱花花瓣样式 */
 .sakura {
   position: absolute !important;
+  top: -10% !important;
   background: linear-gradient(180deg, #fce7f3, #f9a8d4) !important;
   border-radius: 50% 50% 50% 50% / 65% 65% 35% 35% !important;
   opacity: 0.7 !important;
@@ -216,10 +217,11 @@ body::before {
   animation: sakura-fall linear infinite !important;
 }
 
-/* 樱花飘落动画 - 减少横向偏移，避免飘到边外 */
+/* 樱花飘落动画 - 用top属性，更可靠 */
 @keyframes sakura-fall {
   0% {
-    transform: translateY(-10vh) rotate(0deg) translateX(0);
+    top: -10%;
+    transform: rotate(0deg) translateX(0);
     opacity: 0;
   }
   10% {
@@ -229,7 +231,8 @@ body::before {
     opacity: 0.7;
   }
   100% {
-    transform: translateY(110vh) rotate(360deg) translateX(20px);
+    top: 110%;
+    transform: rotate(360deg) translateX(20px);
     opacity: 0;
   }
 }
@@ -273,7 +276,7 @@ body::before {
     // 樱花从 5% 到 95% 的位置开始，避免太靠边出现条条
     sakura.style.left = (Math.random() * 90 + 5) + "%";
     sakura.style.animationDuration = (Math.random() * 10 + 15) + "s";
-    sakura.style.animationDelay = Math.random() * 10 + "s";
+    sakura.style.animationDelay = Math.random() * 3 + "s";
     const size = Math.random() * 8 + 10;
     sakura.style.width = size + "px";
     sakura.style.height = size * 1.4 + "px";
