@@ -144,6 +144,7 @@ nav[data-astro-cid-3ef6ksr2] h2 a[data-astro-cid-3ef6ksr2]{color:#fff!important;
     }
     /* 调整花瓣飘落动画，减少横向偏移 */
     body .petal {
+      position: absolute !important;
       background: linear-gradient(180deg, #fce7f3, #f9a8d4) !important;
       box-shadow: 0 0 8px #f9a8d466 !important;
       opacity: 0.7 !important;
@@ -199,8 +200,8 @@ body::before {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
+  width: 100vw !important;
+  height: 100vh !important;
   pointer-events: none !important;
   z-index: 5 !important;
   overflow: hidden !important;
@@ -209,7 +210,7 @@ body::before {
 /* 樱花花瓣样式 */
 .sakura {
   position: absolute !important;
-  top: -10% !important;
+  top: -20px !important;
   background: linear-gradient(180deg, #fce7f3, #f9a8d4) !important;
   border-radius: 50% 50% 50% 50% / 65% 65% 35% 35% !important;
   opacity: 0.7 !important;
@@ -217,10 +218,10 @@ body::before {
   animation: sakura-fall linear infinite !important;
 }
 
-/* 樱花飘落动画 - 用top属性，更可靠 */
+/* 樱花飘落动画 - 用vh单位，更可靠 */
 @keyframes sakura-fall {
   0% {
-    top: -10%;
+    top: -20px;
     transform: rotate(0deg) translateX(0);
     opacity: 0;
   }
@@ -231,7 +232,7 @@ body::before {
     opacity: 0.7;
   }
   100% {
-    top: 110%;
+    top: 100vh;
     transform: rotate(360deg) translateX(20px);
     opacity: 0;
   }
@@ -272,7 +273,7 @@ body::before {
   const sakuraCount = 15;
   for (let i = 0; i < sakuraCount; i++) {
     const sakura = document.createElement("div");
-    sakura.className = "sakura";
+    sakura.className = "petal";
     // 樱花从 5% 到 95% 的位置开始，避免太靠边出现条条
     sakura.style.left = (Math.random() * 90 + 5) + "%";
     sakura.style.animationDuration = (Math.random() * 10 + 15) + "s";
