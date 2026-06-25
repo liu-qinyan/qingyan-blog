@@ -279,12 +279,12 @@ body::before {
     sakura.className = "petal";
     // 樱花从 5% 到 95% 的位置开始，避免太靠边出现条条
     sakura.style.left = (Math.random() * 90 + 5) + "%";
-    sakura.style.animationDuration = (Math.random() * 10 + 15) + "s";
-    sakura.style.animationDelay = Math.random() * 3 + "s";
+    const duration = Math.random() * 10 + 15;
+    const delay = Math.random() * 3;
+    sakura.style.animation = `fall-mobile ${duration}s linear ${delay}s infinite`;
     const size = Math.random() * 8 + 10;
     sakura.style.width = size + "px";
     sakura.style.height = size * 1.4 + "px";
-    sakura.style.transform = "rotate(" + (Math.random() * 30 - 15) + "deg)";
     sakuraContainer.appendChild(sakura);
   }
 })();
