@@ -137,8 +137,9 @@ nav[data-astro-cid-3ef6ksr2] h2 a[data-astro-cid-3ef6ksr2]{color:#fff!important;
     }
     /* 强制花瓣为粉色 */
     body .petal {
-      background: linear-gradient(180deg, #fce7f3, #f9a8d4) !important;
-      box-shadow: 0 0 8px #f9a8d466 !important;
+      background: linear-gradient(180deg, #fbcfe8, #ec4899) !important;
+      box-shadow: 0 0 10px #f472b688 !important;
+      opacity: 0.8 !important;
     }
   </style>
 </head> <body data-astro-cid-j7pv25f6> <header data-astro-cid-3ef6ksr2 style="background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border-bottom: none !important; box-shadow: none !important;"> <nav data-astro-cid-3ef6ksr2> <h2 data-astro-cid-3ef6ksr2><a href="/qingyan-blog/" data-astro-cid-3ef6ksr2>柳卿烟</a></h2> <div class="internal-links" data-astro-cid-3ef6ksr2> <a href="/qingyan-blog/" class="active" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 首页 </a>  <a href="/qingyan-blog/blog" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 博客 </a>  <a href="/qingyan-blog/gallery" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 相册 </a>  <a href="/qingyan-blog/guestbook" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 留言板 </a>  <a href="/qingyan-blog/about" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 关于我 </a>  <a href="/qingyan-blog/music" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 音乐馆 </a>  </div> </nav> </header>   <!-- 花瓣飘落 --> <div class="petal-container" id="petalContainer" data-astro-cid-j7pv25f6></div> <!-- 首页全屏 --> <section class="hero" style="background: transparent;" data-astro-cid-j7pv25f6> <div class="avatar-float"><img src="/qingyan-blog/assets/avatar.png" alt="头像" class="avatar" data-astro-cid-j7pv25f6></div> <h1 class="name" data-astro-cid-j7pv25f6>柳卿烟</h1> <p class="quote-jp" data-astro-cid-j7pv25f6>私はずっとここにいるよ</p> <p class="quote-cn" data-astro-cid-j7pv25f6>我会一直在这里哦</p> <div class="scroll-hint" data-astro-cid-j7pv25f6>↓ 向下滑动探索更多 ↓</div> </section> <!-- 内容区域 --> <section class="content-section" data-astro-cid-j7pv25f6> <div class="container" data-astro-cid-j7pv25f6> <h2 class="section-title" data-astro-cid-j7pv25f6>欢迎来到我的小窝～</h2> <p class="section-desc" data-astro-cid-j7pv25f6>这里是柳卿烟的个人博客，记录生活、分享心情、收藏喜欢的事物。</p> <div class="feature-cards" data-astro-cid-j7pv25f6> <div class="card" data-astro-cid-j7pv25f6> <div class="card-icon" data-astro-cid-j7pv25f6>📝</div> <h3 data-astro-cid-j7pv25f6>博客文章</h3> <p data-astro-cid-j7pv25f6>记录生活点滴与思考</p> <a href="/qingyan-blog/blog" class="card-btn" data-astro-cid-j7pv25f6>去看看</a> </div> <div class="card" data-astro-cid-j7pv25f6> <div class="card-icon" data-astro-cid-j7pv25f6>📷</div> <h3 data-astro-cid-j7pv25f6>相册</h3> <p data-astro-cid-j7pv25f6>收藏喜欢的照片和瞬间</p> <a href="/qingyan-blog/gallery" class="card-btn" data-astro-cid-j7pv25f6>去看看</a> </div> <div class="card" data-astro-cid-j7pv25f6> <div class="card-icon" data-astro-cid-j7pv25f6>🎵</div> <h3 data-astro-cid-j7pv25f6>音乐馆</h3> <p data-astro-cid-j7pv25f6>分享好听的音乐</p> <a href="/qingyan-blog/music" class="card-btn" data-astro-cid-j7pv25f6>去听听</a> </div> </div> </div> </section> <!-- 音乐播放器 --> <div class="music-player" data-astro-cid-j7pv25f6> <button class="music-btn" id="musicBtn" data-astro-cid-j7pv25f6>▶</button> <span data-astro-cid-j7pv25f6>🎵 音乐</span> </div> <!-- 访客数 --> <div class="visitor-count" data-astro-cid-j7pv25f6>
@@ -147,25 +148,4 @@ nav[data-astro-cid-3ef6ksr2] h2 a[data-astro-cid-3ef6ksr2]{color:#fff!important;
 </div>
 
 <script>
-// 樱花飘落特效（直接放在页面里，确保能执行）
-(function() {
-  const petalContainer = document.getElementById("petalContainer");
-  if (!petalContainer) return;
-  
-  const petalCount = 8;
-  for (let i = 0; i < petalCount; i++) {
-    const petal = document.createElement("div");
-    petal.className = "petal";
-    petal.setAttribute("data-astro-cid-j7pv25f6", "");
-    petal.style.left = (Math.random() * 90 + 5) + "%";
-    petal.style.animationDuration = (Math.random() * 10 + 15) + "s";
-    petal.style.animationDelay = Math.random() * 8 + "s";
-    const size = Math.random() * 8 + 12;
-    petal.style.width = size + "px";
-    petal.style.height = size * 1.4 + "px";
-    petal.style.transform = "rotate(" + (Math.random() * 30 - 15) + "deg)";
-    petalContainer.appendChild(petal);
-  }
-})();
-</script>
   <script src="/qingyan-blog/assets/live2d-interaction.js"></script></body> </html>
