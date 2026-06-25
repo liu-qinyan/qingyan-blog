@@ -135,25 +135,85 @@ nav[data-astro-cid-3ef6ksr2] h2 a[data-astro-cid-3ef6ksr2]{color:#fff!important;
     body #live2dTip:after {
       border-top-color: rgba(255, 250, 240, 0.98) !important;
     }
-    /* 强制花瓣为粉色 */
-    body .petal {
-      background: linear-gradient(180deg, #fce7f3, #f9a8d4) !important;
-      box-shadow: 0 0 8px #f9a8d466 !important;
-      opacity: 0.7 !important;
-    }
     /* 确保花瓣容器裁剪，避免边边出现条条 */
     body .petal-container {
       overflow: hidden !important;
       width: 100% !important;
       left: 0 !important;
+      right: 0 !important;
+    }
+    /* 调整花瓣飘落动画，减少横向偏移 */
+    body .petal {
+      background: linear-gradient(180deg, #fce7f3, #f9a8d4) !important;
+      box-shadow: 0 0 8px #f9a8d466 !important;
+      opacity: 0.7 !important;
+      animation-name: fall-mobile !important;
+    }
+    @keyframes fall-mobile {
+      0% {
+        transform: translateY(-10vh) rotate(0deg) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      90% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg) translateX(15px);
+        opacity: 0;
+      }
     }
   </style>
+<style>
+/* 最高优先级样式，强制覆盖所有其他样式 */
+html, body {
+  overflow-x: hidden !important;
+}
+body {
+  background: url('/qingyan-blog/assets/bg-home.jpg') center/cover no-repeat fixed !important;
+}
+body::before {
+  display: none !important;
+}
+.hero, .hero[data-astro-cid-j7pv25f6] {
+  background: transparent !important;
+}
+.hero::before, .hero[data-astro-cid-j7pv25f6]::before {
+  display: none !important;
+}
+.content-section, .content-section[data-astro-cid-j7pv25f6] {
+  background: transparent !important;
+}
+.card, .card[data-astro-cid-j7pv25f6] {
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+.section-title, .section-desc {
+  color: #fff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+}
+/* 花瓣样式 - 强制粉色 */
+.petal, .petal[data-astro-cid-j7pv25f6] {
+  background: linear-gradient(180deg, #fce7f3, #f9a8d4) !important;
+  box-shadow: 0 0 8px #f9a8d466 !important;
+  opacity: 0.7 !important;
+}
+/* 花瓣容器 - 强制裁剪，防止边边出现条条 */
+.petal-container, .petal-container[data-astro-cid-j7pv25f6] {
+  overflow: hidden !important;
+  width: 100% !important;
+  height: 100% !important;
+  left: 0 !important;
+  top: 0 !important;
+  position: fixed !important;
+}
+</style>
 </head> <body data-astro-cid-j7pv25f6> <header data-astro-cid-3ef6ksr2 style="background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border-bottom: none !important; box-shadow: none !important;"> <nav data-astro-cid-3ef6ksr2> <h2 data-astro-cid-3ef6ksr2><a href="/qingyan-blog/" data-astro-cid-3ef6ksr2>柳卿烟</a></h2> <div class="internal-links" data-astro-cid-3ef6ksr2> <a href="/qingyan-blog/" class="active" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 首页 </a>  <a href="/qingyan-blog/blog" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 博客 </a>  <a href="/qingyan-blog/gallery" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 相册 </a>  <a href="/qingyan-blog/guestbook" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 留言板 </a>  <a href="/qingyan-blog/about" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 关于我 </a>  <a href="/qingyan-blog/music" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 音乐馆 </a>  </div> </nav> </header>   <!-- 花瓣飘落 --> <div class="petal-container" id="petalContainer" data-astro-cid-j7pv25f6></div> <!-- 首页全屏 --> <section class="hero" style="background: transparent;" data-astro-cid-j7pv25f6> <div class="avatar-float"><img src="/qingyan-blog/assets/avatar.png" alt="头像" class="avatar" data-astro-cid-j7pv25f6></div> <h1 class="name" data-astro-cid-j7pv25f6>柳卿烟</h1> <p class="quote-jp" data-astro-cid-j7pv25f6>私はずっとここにいるよ</p> <p class="quote-cn" data-astro-cid-j7pv25f6>我会一直在这里哦</p> <div class="scroll-hint" data-astro-cid-j7pv25f6>↓ 向下滑动探索更多 ↓</div> </section> <!-- 内容区域 --> <section class="content-section" data-astro-cid-j7pv25f6> <div class="container" data-astro-cid-j7pv25f6> <h2 class="section-title" data-astro-cid-j7pv25f6>欢迎来到我的小窝～</h2> <p class="section-desc" data-astro-cid-j7pv25f6>这里是柳卿烟的个人博客，记录生活、分享心情、收藏喜欢的事物。</p> <div class="feature-cards" data-astro-cid-j7pv25f6> <div class="card" data-astro-cid-j7pv25f6> <div class="card-icon" data-astro-cid-j7pv25f6>📝</div> <h3 data-astro-cid-j7pv25f6>博客文章</h3> <p data-astro-cid-j7pv25f6>记录生活点滴与思考</p> <a href="/qingyan-blog/blog" class="card-btn" data-astro-cid-j7pv25f6>去看看</a> </div> <div class="card" data-astro-cid-j7pv25f6> <div class="card-icon" data-astro-cid-j7pv25f6>📷</div> <h3 data-astro-cid-j7pv25f6>相册</h3> <p data-astro-cid-j7pv25f6>收藏喜欢的照片和瞬间</p> <a href="/qingyan-blog/gallery" class="card-btn" data-astro-cid-j7pv25f6>去看看</a> </div> <div class="card" data-astro-cid-j7pv25f6> <div class="card-icon" data-astro-cid-j7pv25f6>🎵</div> <h3 data-astro-cid-j7pv25f6>音乐馆</h3> <p data-astro-cid-j7pv25f6>分享好听的音乐</p> <a href="/qingyan-blog/music" class="card-btn" data-astro-cid-j7pv25f6>去听听</a> </div> </div> </div> </section> <!-- 音乐播放器 --> <div class="music-player" data-astro-cid-j7pv25f6> <button class="music-btn" id="musicBtn" data-astro-cid-j7pv25f6>▶</button> <span data-astro-cid-j7pv25f6>🎵 音乐</span> </div> <!-- 访客数 --> <div class="visitor-count" data-astro-cid-j7pv25f6>
 👀 访客：<span id="visitorCount" data-astro-cid-j7pv25f6>加载中...</span><span id="busuanzi_value_site_pv" style="display:none;"></span> </div> <!-- 看板娘 --> <div class="live2d-container" id="live2dContainer" data-astro-cid-4dfffhy5> <div class="live2d-tip" id="live2dTip" data-astro-cid-4dfffhy5>欢迎来到柳卿烟的小窝～</div> <img src="/qingyan-blog/assets/live2d-girl.png" alt="看板娘" class="live2d-img" id="live2dImg" data-astro-cid-4dfffhy5> </div>  <div class="back-to-top" id="backToTop" title="回到顶部" data-astro-cid-wlspcwf4>
 ↑
 </div>
 
-<script>
 <script>
 // 樱花飘落特效
 (function() {
@@ -165,8 +225,8 @@ nav[data-astro-cid-3ef6ksr2] h2 a[data-astro-cid-3ef6ksr2]{color:#fff!important;
     const petal = document.createElement("div");
     petal.className = "petal";
     petal.setAttribute("data-astro-cid-j7pv25f6", "");
-    // 花瓣从 5% 到 95% 的位置开始，避免太靠边出现条条
-    petal.style.left = (Math.random() * 90 + 5) + "%";
+    // 花瓣从 10% 到 90% 的位置开始，避免太靠边出现条条
+    petal.style.left = (Math.random() * 80 + 10) + "%";
     petal.style.animationDuration = (Math.random() * 10 + 15) + "s";
     petal.style.animationDelay = Math.random() * 8 + "s";
     const size = Math.random() * 8 + 12;
