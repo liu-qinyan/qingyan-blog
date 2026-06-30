@@ -235,18 +235,24 @@ body {
     background-repeat: no-repeat !important;
 }
 
-/* 导航栏透明毛玻璃效果 */
+/* 导航栏完全透明 */
 nav {
-    background: rgba(255, 255, 255, 0.15) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: none !important;
 }
 
-/* 确保导航栏文字清晰 */
+/* 导航栏文字清晰可见 */
 nav a {
     color: #fff !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+    font-weight: 500 !important;
+}
+
+nav h2 a {
+    font-size: 20px !important;
+    font-weight: 600 !important;
 }
 
 /* 内容区域增加半透明背景，保证可读性 */
