@@ -197,107 +197,123 @@
       border: 1px solid rgba(255, 182, 193, 0.3);
     }
     
-    /* 今日状态卡片 - 樱之诗风格 */
+    /* 今日状态卡片 - 普通二次元风格 */
     .status-section[data-astro-cid-j7pv25f6] {
-      padding: 60px 20px;
+      padding: 50px 20px;
       position: relative;
       z-index: 2;
     }
     
     .status-card[data-astro-cid-j7pv25f6] {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 24px;
-      padding: 30px 35px;
-      box-shadow: 0 8px 40px rgba(255, 182, 193, 0.3), 0 4px 20px rgba(255, 105, 180, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      max-width: 900px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 28px;
+      padding: 28px 32px;
+      box-shadow: 0 10px 40px rgba(255, 105, 180, 0.25), 0 4px 15px rgba(255, 182, 193, 0.2);
+      border: 2px solid rgba(255, 182, 193, 0.5);
+      max-width: 850px;
       margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .status-card[data-astro-cid-j7pv25f6]::before {
+      content: "♡";
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 24px;
+      color: rgba(255, 182, 193, 0.6);
+    }
+    
+    .status-card[data-astro-cid-j7pv25f6]::after {
+      content: "✿";
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      font-size: 20px;
+      color: rgba(255, 182, 193, 0.5);
     }
     
     .status-header[data-astro-cid-j7pv25f6] {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
       padding-bottom: 15px;
-      border-bottom: 1px solid rgba(255, 182, 193, 0.4);
+      border-bottom: 2px dashed rgba(255, 182, 193, 0.5);
     }
     
     .status-greeting[data-astro-cid-j7pv25f6] {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
-      color: #db2777;
-      text-shadow: 0 2px 10px rgba(255, 182, 193, 0.3);
+      color: #ec4899;
+      text-shadow: 0 2px 8px rgba(255, 182, 193, 0.4);
+      font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
     }
     
     .status-date[data-astro-cid-j7pv25f6] {
-      font-size: 14px;
-      color: #9ca3af;
+      font-size: 13px;
+      color: #f472b6;
+      font-weight: 500;
     }
     
     .status-items[data-astro-cid-j7pv25f6] {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 15px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
     }
     
     .status-item[data-astro-cid-j7pv25f6] {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      padding: 18px 12px;
-      border-radius: 16px;
+      gap: 10px;
+      padding: 20px 15px;
+      border-radius: 20px;
       transition: all 0.3s ease;
       text-align: center;
+      background: linear-gradient(180deg, rgba(255, 240, 245, 0.8), rgba(255, 228, 238, 0.6));
+      border: 2px solid rgba(255, 182, 193, 0.4);
+      position: relative;
     }
     
     .status-item[data-astro-cid-j7pv25f6]:hover {
-      transform: translateY(-5px) scale(1.02);
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+      border-color: rgba(244, 114, 182, 0.6);
     }
     
-    .status-item.music[data-astro-cid-j7pv25f6] {
-      background: linear-gradient(135deg, rgba(251, 207, 232, 0.6), rgba(249, 168, 212, 0.4));
-      border: 1px solid rgba(244, 114, 182, 0.3);
-    }
-    
-    .status-item.book[data-astro-cid-j7pv25f6] {
-      background: linear-gradient(135deg, rgba(191, 219, 254, 0.6), rgba(147, 197, 253, 0.4));
-      border: 1px solid rgba(96, 165, 250, 0.3);
-    }
-    
-    .status-item.game[data-astro-cid-j7pv25f6] {
-      background: linear-gradient(135deg, rgba(221, 214, 254, 0.6), rgba(196, 181, 253, 0.4));
-      border: 1px solid rgba(167, 139, 250, 0.3);
-    }
-    
-    .status-item.mood[data-astro-cid-j7pv25f6] {
-      background: linear-gradient(135deg, rgba(254, 215, 170, 0.6), rgba(253, 186, 116, 0.4));
-      border: 1px solid rgba(251, 146, 60, 0.3);
-    }
-    
-    .status-item.weather[data-astro-cid-j7pv25f6] {
-      background: linear-gradient(135deg, rgba(167, 243, 208, 0.6), rgba(110, 231, 183, 0.4));
-      border: 1px solid rgba(52, 211, 153, 0.3);
+    .status-item[data-astro-cid-j7pv25f6]::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 8px;
+      height: 8px;
+      background: #f472b6;
+      border-radius: 50%;
+      opacity: 0.6;
     }
     
     .status-icon[data-astro-cid-j7pv25f6] {
-      font-size: 32px;
+      font-size: 36px;
+      filter: drop-shadow(0 2px 4px rgba(255, 105, 180, 0.3));
     }
     
     .status-label[data-astro-cid-j7pv25f6] {
-      font-size: 12px;
-      color: #6b7280;
-      font-weight: 500;
+      font-size: 11px;
+      color: #f472b6;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
     
     .status-value[data-astro-cid-j7pv25f6] {
       font-size: 13px;
-      color: #374151;
+      color: #be185d;
       font-weight: 600;
-      line-height: 1.4;
+      line-height: 1.5;
     }
     
     /* 功能入口卡片 */
@@ -952,30 +968,25 @@
           <span class="status-date" data-astro-cid-j7pv25f6 id="statusDate">7月1日 星期三</span>
         </div>
         <div class="status-items" data-astro-cid-j7pv25f6>
-          <div class="status-item music" data-astro-cid-j7pv25f6>
+          <div class="status-item" data-astro-cid-j7pv25f6>
             <span class="status-icon" data-astro-cid-j7pv25f6>🎵</span>
             <span class="status-label" data-astro-cid-j7pv25f6>正在听</span>
-            <span class="status-value" data-astro-cid-j7pv25f6>樱之诗 OST</span>
+            <span class="status-value" data-astro-cid-j7pv25f6>二次元音乐</span>
           </div>
-          <div class="status-item book" data-astro-cid-j7pv25f6>
+          <div class="status-item" data-astro-cid-j7pv25f6>
             <span class="status-icon" data-astro-cid-j7pv25f6>📖</span>
-            <span class="status-label" data-astro-cid-j7pv25f6>正在读</span>
-            <span class="status-value" data-astro-cid-j7pv25f6>《春天与阿修罗》</span>
+            <span class="status-label" data-astro-cid-j7pv25f6>在读</span>
+            <span class="status-value" data-astro-cid-j7pv25f6>轻小说</span>
           </div>
-          <div class="status-item game" data-astro-cid-j7pv25f6>
+          <div class="status-item" data-astro-cid-j7pv25f6>
             <span class="status-icon" data-astro-cid-j7pv25f6>🎮</span>
-            <span class="status-label" data-astro-cid-j7pv25f6>正在玩</span>
-            <span class="status-value" data-astro-cid-j7pv25f6>樱之诗</span>
+            <span class="status-label" data-astro-cid-j7pv25f6>在玩</span>
+            <span class="status-value" data-astro-cid-j7pv25f6>Galgame</span>
           </div>
-          <div class="status-item mood" data-astro-cid-j7pv25f6>
-            <span class="status-icon" data-astro-cid-j7pv25f6>😊</span>
+          <div class="status-item" data-astro-cid-j7pv25f6>
+            <span class="status-icon" data-astro-cid-j7pv25f6>🌸</span>
             <span class="status-label" data-astro-cid-j7pv25f6>今日心情</span>
-            <span class="status-value" data-astro-cid-j7pv25f6>平静而温柔</span>
-          </div>
-          <div class="status-item weather" data-astro-cid-j7pv25f6>
-            <span class="status-icon" data-astro-cid-j7pv25f6>☀️</span>
-            <span class="status-label" data-astro-cid-j7pv25f6>今日天气</span>
-            <span class="status-value" data-astro-cid-j7pv25f6>晴朗 28°C</span>
+            <span class="status-value" data-astro-cid-j7pv25f6>软软的</span>
           </div>
         </div>
       </div>
