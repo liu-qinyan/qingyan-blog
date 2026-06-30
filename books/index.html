@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" href="/favicon.ico">
+<title>书单&观影 - 柳卿烟</title>
+<meta name="description" content="书籍、番剧、电影收藏记录">
+<link rel="stylesheet" href="/qingyan-blog/assets/_slug_.Cre6ji7n.css">
+<style>
+/* 全局胶片颗粒噪点 */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.08;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+body { animation: pageFadeIn 0.8s ease-out; }
+@keyframes pageFadeIn {
+  0% { opacity: 0; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1); }
+}
+html, body { overflow-x: hidden !important; }
+body {
+  background: linear-gradient(135deg, #f0f9ff 0%, #fce7f3 50%, #f0f9ff 100%);
+  min-height: 100vh;
+}
+.sakura-container {
+  position: fixed !important;
+  top: 0 !important; left: 0 !important;
+  width: 100vw !important; height: 100vh !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+  overflow: hidden !important;
+}
+.sakura-petal {
+  position: absolute !important;
+  top: -30px !important;
+  background: linear-gradient(180deg, #fff0f5, #fbcfe8, #f9a8d4) !important;
+  border-radius: 50% 50% 50% 50% / 65% 65% 35% 35% !important;
+  pointer-events: none !important;
+  animation: sakura-fall-swing linear infinite !important;
+  box-shadow: 0 0 var(--glow-size, 6px) var(--glow-size, 6px) rgba(251, 207, 232, 0.6) !important;
+  filter: blur(0.3px) !important;
+}
+@keyframes sakura-fall-swing {
+  0% { top: -30px; transform: rotate(0deg) translateX(0) scale(1); opacity: 0; }
+  10% { opacity: 1; }
+  25% { transform: rotate(90deg) translateX(var(--swing-amount, 20px)) scale(0.95); }
+  50% { transform: rotate(180deg) translateX(0) scale(1); }
+  75% { transform: rotate(270deg) translateX(calc(var(--swing-amount, 20px) * -1)) scale(0.95); }
+  90% { opacity: 1; }
+  100% { top: 100vh; transform: rotate(360deg) translateX(0) scale(0.9); opacity: 0; }
+}
+.page-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 100px 20px 60px;
+  position: relative;
+  z-index: 10;
+}
+.page-title {
+  text-align: center;
+  font-size: 42px;
+  color: #db2777;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-shadow: 0 2px 15px rgba(251, 207, 232, 0.5);
+}
+.page-subtitle {
+  text-align: center;
+  font-size: 16px;
+  color: #94a3b8;
+  margin-bottom: 50px;
+}
+/* 分类标签 */
+.filter-tags {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+.filter-tag {
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(251, 207, 232, 0.4);
+  border-radius: 20px;
+  font-size: 14px;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.filter-tag:hover, .filter-tag.active {
+  background: linear-gradient(135deg, #f472b6, #38bdf8);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.3);
+}
+/* 卡片网格 */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+}
+.book-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(251, 207, 232, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.book-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.book-card:hover {
+  transform: translateY(-10px) rotateX(5deg) rotateY(-5deg) scale(1.03);
+  box-shadow: 0 20px 50px rgba(251, 207, 232, 0.35), 0 10px 25px rgba(56, 189, 248, 0.15);
+}
+.book-cover {
+  height: 280px;
+  background: linear-gradient(135deg, #fce7f3, #e0f2fe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  position: relative;
+  overflow: hidden;
+}
+.book-cover::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%);
+}
+.book-info {
+  padding: 18px;
+}
+.book-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.book-author {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+.book-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.stars {
+  color: #fbbf24;
+  font-size: 13px;
+}
+.rating-num {
+  font-size: 13px;
+  color: #f59e0b;
+  font-weight: 600;
+}
+.book-review {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.book-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background: linear-gradient(135deg, #fce7f3, #e0f2fe);
+  border-radius: 12px;
+  font-size: 11px;
+  color: #db2777;
+  margin-bottom: 10px;
+}
+@media (max-width: 768px) {
+  .page-title { font-size: 32px; }
+  .book-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+  .book-cover { height: 200px; font-size: 45px; }
+  .book-info { padding: 12px; }
+  .book-title { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<header data-astro-cid-3ef6ksr2>
+<nav data-astro-cid-3ef6ksr2>
+<h2 data-astro-cid-3ef6ksr2><a href="/qingyan-blog/" data-astro-cid-3ef6ksr2>柳卿烟</a></h2>
+<div class="internal-links" data-astro-cid-3ef6ksr2>
+<a href="/qingyan-blog/" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 首页 </a>
+<a href="/qingyan-blog/blog" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 博客 </a>
+<a href="/qingyan-blog/gallery" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 相册 </a>
+<a href="/qingyan-blog/guestbook" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 留言板 </a>
+<a href="/qingyan-blog/about" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 关于我 </a>
+<a href="/qingyan-blog/music" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 音乐馆 </a>
+<a href="/qingyan-blog/timeline" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 时光机 </a>
+<a href="/qingyan-blog/books" class="active" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 书单 </a>
+</div>
+</nav>
+</header>
+
+<div class="sakura-container" id="sakuraContainer"></div>
+
+<div class="page-wrapper">
+<h1 class="page-title">📚 书单&观影</h1>
+<p class="page-subtitle">收藏喜欢的故事，它们会变成灵魂的一部分</p>
+
+<div class="filter-tags">
+<span class="filter-tag active" data-filter="all">全部</span>
+<span class="filter-tag" data-filter="book">书籍</span>
+<span class="filter-tag" data-filter="anime">番剧</span>
+<span class="filter-tag" data-filter="movie">电影</span>
+</div>
+
+<div class="book-grid" id="bookGrid">
+<div class="book-card" data-category="book">
+<div class="book-cover">📖</div>
+<div class="book-info">
+<span class="book-tag">书籍</span>
+<div class="book-title">春天与阿修罗</div>
+<div class="book-author">宫泽贤治</div>
+<div class="book-rating">
+<span class="stars">★★★★★</span>
+<span class="rating-num">9.5</span>
+</div>
+<div class="book-review">贤治的诗里有整个宇宙，每一句都像清晨的露珠一样透明又珍贵。</div>
+</div>
+</div>
+
+<div class="book-card" data-category="book">
+<div class="book-cover">📕</div>
+<div class="book-info">
+<span class="book-tag">书籍</span>
+<div class="book-title">人间失格</div>
+<div class="book-author">太宰治</div>
+<div class="book-rating">
+<span class="stars">★★★★☆</span>
+<span class="rating-num">8.8</span>
+</div>
+<div class="book-review">读完心里闷闷的，但又有种被理解的感觉。敏感的人会在里面看到自己。</div>
+</div>
+</div>
+
+<div class="book-card" data-category="anime">
+<div class="book-cover">🌸</div>
+<div class="book-info">
+<span class="book-tag">番剧</span>
+<div class="book-title">樱之诗</div>
+<div class="book-author">枕社</div>
+<div class="book-rating">
+<span class="stars">★★★★★</span>
+<span class="rating-num">9.9</span>
+</div>
+<div class="book-review">这就是艺术啊... 剧本、音乐、画面全部都是顶级的，哭了好多次。</div>
+</div>
+</div>
+
+<div class="book-card" data-category="anime">
+<div class="book-cover">🌙</div>
+<div class="book-info">
+<span class="book-tag">番剧</span>
+<div class="book-title">CLANNAD</div>
+<div class="book-author">Key社</div>
+<div class="book-rating">
+<span class="stars">★★★★★</span>
+<span class="rating-num">9.7</span>
+</div>
+<div class="book-review">人生就是这样吧，有笑有泪，有相遇也有离别。看完想好好对待身边的人。</div>
+</div>
+</div>
+
+<div class="book-card" data-category="movie">
+<div class="book-cover">🎬</div>
+<div class="book-info">
+<span class="book-tag">电影</span>
+<div class="book-title">秒速五厘米</div>
+<div class="book-author">新海诚</div>
+<div class="book-rating">
+<span class="stars">★★★★☆</span>
+<span class="rating-num">8.5</span>
+</div>
+<div class="book-review">樱花飘落的速度是秒速五厘米，那两颗心靠近又远离需要多久呢？</div>
+</div>
+</div>
+
+<div class="book-card" data-category="movie">
+<div class="book-cover">🌟</div>
+<div class="book-info">
+<span class="book-tag">电影</span>
+<div class="book-title">你的名字</div>
+<div class="book-author">新海诚</div>
+<div class="book-rating">
+<span class="stars">★★★★★</span>
+<span class="rating-num">9.2</span>
+</div>
+<div class="book-review">不管你在世界的哪个地方，我一定会，再次去见你的。</div>
+</div>
+</div>
+
+<div class="book-card" data-category="book">
+<div class="book-cover">📗</div>
+<div class="book-info">
+<span class="book-tag">书籍</span>
+<div class="book-title">挪威的森林</div>
+<div class="book-author">村上春树</div>
+<div class="book-rating">
+<span class="stars">★★★★☆</span>
+<span class="rating-num">8.6</span>
+</div>
+<div class="book-review">青春的迷茫和伤痛，读起来有点闷但又放不下。死并非生的对立面。</div>
+</div>
+</div>
+
+<div class="book-card" data-category="anime">
+<div class="book-cover">🎭</div>
+<div class="book-info">
+<span class="book-tag">番剧</span>
+<div class="book-title">白色相簿2</div>
+<div class="book-author">Leaf社</div>
+<div class="book-rating">
+<span class="stars">★★★★★</span>
+<span class="rating-num">9.6</span>
+</div>
+<div class="book-review">为什么会变成这样呢... 第一次有了喜欢的人，有了一生的挚友。</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// 樱花飘落
+(function() {
+  const container = document.getElementById("sakuraContainer");
+  if (!container) return;
+  const layers = [
+    { count: 6, sizeMin: 6, sizeMax: 10, opacity: 0.4, speedMin: 25, speedMax: 35, glow: 3 },
+    { count: 10, sizeMin: 10, sizeMax: 16, opacity: 0.7, speedMin: 15, speedMax: 25, glow: 6 },
+    { count: 4, sizeMin: 16, sizeMax: 22, opacity: 0.9, speedMin: 10, speedMax: 18, glow: 10 }
+  ];
+  layers.forEach((layer) => {
+    for (let i = 0; i < layer.count; i++) {
+      const petal = document.createElement("div");
+      petal.className = "sakura-petal";
+      const size = Math.random() * (layer.sizeMax - layer.sizeMin) + layer.sizeMin;
+      petal.style.width = size + "px";
+      petal.style.height = size * 1.4 + "px";
+      petal.style.left = (Math.random() * 90 + 5) + "%";
+      petal.style.animationDuration = (Math.random() * (layer.speedMax - layer.speedMin) + layer.speedMin) + "s";
+      petal.style.animationDelay = Math.random() * layer.speedMax + "s";
+      petal.style.opacity = layer.opacity;
+      petal.style.setProperty('--glow-size', layer.glow + 'px');
+      petal.style.setProperty('--swing-amount', (Math.random() * 30 + 20) + 'px');
+      container.appendChild(petal);
+    }
+  });
+})();
+
+// 滚动入场
+(function() {
+  const cards = document.querySelectorAll('.book-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, idx) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), idx * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  cards.forEach(card => observer.observe(card));
+})();
+
+// 分类筛选
+(function() {
+  const tags = document.querySelectorAll('.filter-tag');
+  const cards = document.querySelectorAll('.book-card');
+  tags.forEach(tag => {
+    tag.addEventListener('click', () => {
+      tags.forEach(t => t.classList.remove('active'));
+      tag.classList.add('active');
+      const filter = tag.dataset.filter;
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.category === filter) {
+          card.style.display = 'block';
+          setTimeout(() => card.classList.add('visible'), 50);
+        } else {
+          card.classList.remove('visible');
+          setTimeout(() => card.style.display = 'none', 300);
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
