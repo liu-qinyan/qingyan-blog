@@ -56,13 +56,13 @@
 
 .aplayer .aplayer-info .aplayer-music .aplayer-title {
     font-size: 20px !important;
-    color: #0369a1 !important;
+    color: #db2777 !important;
     font-weight: 700 !important;
 }
 
 .aplayer .aplayer-info .aplayer-music .aplayer-author {
     font-size: 14px !important;
-    color: #7dd3fc !important;
+    color: #f9a8d4 !important;
 }
 
 .aplayer .aplayer-info .aplayer-controller {
@@ -76,20 +76,20 @@
 
 .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar {
     height: 6px !important;
-    background: #e0f2fe !important;
+    background: #fff0f5 !important;
     border-radius: 3px !important;
 }
 
 .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played {
     height: 100% !important;
-    background: linear-gradient(90deg, #38bdf8, #7dd3fc) !important;
+    background: linear-gradient(90deg, #fb7185, #f9a8d4) !important;
     border-radius: 3px !important;
 }
 
 .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played .aplayer-thumb {
     width: 14px !important;
     height: 14px !important;
-    background: #38bdf8 !important;
+    background: #fb7185 !important;
     border: 2px solid #fff !important;
     box-shadow: 0 2px 8px rgba(56, 189, 248, 0.4) !important;
     top: 50% !important;
@@ -97,7 +97,7 @@
 }
 
 .aplayer .aplayer-info .aplayer-controller .aplayer-time {
-    color: #7dd3fc !important;
+    color: #f9a8d4 !important;
     font-size: 12px !important;
     bottom: 0 !important;
     position: relative !important;
@@ -128,11 +128,11 @@
     height: 50px !important;
     background: rgba(255, 255, 255, 0.9) !important;
     border-radius: 50% !important;
-    color: #38bdf8 !important;
+    color: #fb7185 !important;
 }
 
 .aplayer .aplayer-pic .aplayer-button path {
-    fill: #38bdf8 !important;
+    fill: #fb7185 !important;
 }
 
 @keyframes rotate {
@@ -165,20 +165,20 @@
 
 .aplayer .aplayer-list ol li.aplayer-list-light {
     background: rgba(56, 189, 248, 0.15) !important;
-    color: #0369a1 !important;
+    color: #db2777 !important;
     font-weight: 600;
 }
 
 .aplayer .aplayer-list ol li .aplayer-list-index {
-    color: #7dd3fc !important;
+    color: #f9a8d4 !important;
 }
 
 .aplayer .aplayer-list ol li.aplayer-list-light .aplayer-list-index {
-    color: #38bdf8 !important;
+    color: #fb7185 !important;
 }
 
 .aplayer .aplayer-list ol li .aplayer-list-author {
-    color: #7dd3fc !important;
+    color: #f9a8d4 !important;
     opacity: 1 !important;
 }
 
@@ -195,7 +195,7 @@
 /* 歌单标题 */
 .playlist-custom-title {
     font-size: 18px;
-    color: #0369a1;
+    color: #db2777;
     margin-bottom: 15px;
     font-weight: 700;
     text-align: center;
@@ -234,8 +234,115 @@
 .meting-loading {
     text-align: center;
     padding: 40px;
-    color: #7dd3fc;
+    color: #f9a8d4;
 }
+
+    /* 导航栏 - 樱之诗风格 */
+    header[data-astro-cid-3ef6ksr2] {
+      background: rgba(255, 255, 255, 0.85) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      box-shadow: 0 2px 20px rgba(255, 105, 180, 0.1) !important;
+      border-bottom: 1px solid rgba(255, 182, 193, 0.2) !important;
+    }
+    
+    nav[data-astro-cid-3ef6ksr2] h2 a[data-astro-cid-3ef6ksr2] {
+      color: #db2777 !important;
+      text-shadow: none !important;
+      font-size: 22px !important;
+      font-weight: 700 !important;
+      letter-spacing: 2px !important;
+    }
+    
+    .internal-links[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2] {
+      color: #6b7280 !important;
+      text-shadow: none !important;
+      font-size: 14px !important;
+      padding: 8px 14px !important;
+      border-radius: 20px !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .internal-links[data-astro-cid-3ef6ksr2] a.active[data-astro-cid-3ef6ksr2] {
+      color: #fff !important;
+      background: linear-gradient(135deg, #f472b6, #fb7185) !important;
+      box-shadow: 0 2px 10px rgba(244, 114, 182, 0.3) !important;
+    }
+    
+    .internal-links[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]:hover {
+      background: rgba(244, 114, 182, 0.1) !important;
+      color: #db2777 !important;
+    }
+    
+    /* 更多菜单 */
+    .more-menu {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .more-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 8px 30px rgba(255, 105, 180, 0.2);
+      border: 1px solid rgba(255, 182, 193, 0.3);
+      min-width: 140px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .more-menu:hover .more-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .more-dropdown a {
+      display: block;
+      padding: 10px 15px;
+      color: #6b7280 !important;
+      text-shadow: none !important;
+      font-size: 13px !important;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    
+    .more-dropdown a:hover {
+      background: rgba(244, 114, 182, 0.1) !important;
+      color: #db2777 !important;
+    }
+    
+    /* 全局胶片颗粒噪点 */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.06;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+    
+    /* 页面淡入过渡 */
+    body {
+      animation: pageFadeIn 0.8s ease-out;
+    }
+    
+    @keyframes pageFadeIn {
+      0% { opacity: 0; transform: scale(0.98); }
+      100% { opacity: 1; transform: scale(1); }
+    }
 </style>
 
 <style>
@@ -290,18 +397,30 @@ body { animation: pageFadeIn 0.8s ease-out; }
 
 <body data-astro-cid-klhljcvd>
 <header data-astro-cid-3ef6ksr2>
-<nav data-astro-cid-3ef6ksr2>
-<h2 data-astro-cid-3ef6ksr2><a href="/qingyan-blog/" data-astro-cid-3ef6ksr2>柳卿烟</a></h2>
-<div class="internal-links" data-astro-cid-3ef6ksr2>
-<a href="/qingyan-blog/" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 首页 </a> 
-<a href="/qingyan-blog/blog" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 博客 </a> 
-<a href="/qingyan-blog/gallery" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 相册 </a> 
-<a href="/qingyan-blog/guestbook" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 留言板 </a> 
-<a href="/qingyan-blog/about" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 关于我 </a> 
-<a href="/qingyan-blog/music" class="active" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> 音乐馆 </a> 
-</div>
-</nav>
-</header>
+    <nav data-astro-cid-3ef6ksr2>
+      <h2 data-astro-cid-3ef6ksr2>
+        <a href="/qingyan-blog/" data-astro-cid-3ef6ksr2>桜の詩</a>
+      </h2>
+      <div class="internal-links" data-astro-cid-3ef6ksr2>
+        <a href="/qingyan-blog/" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg>首页</a>
+        <a href="/qingyan-blog/blog" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg>博客</a>
+        <a href="/qingyan-blog/gallery" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg>相册</a>
+        <a href="/qingyan-blog/music" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg>音乐馆</a>
+        <a href="/qingyan-blog/timeline" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg>时光机</a>
+        <a href="/qingyan-blog/books" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg>书单&观影</a>
+        <a href="/qingyan-blog/guestbook" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg>留言板</a>
+        <a href="/qingyan-blog/about" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg>关于我</a>
+        <div class="more-menu">
+          <a href="javascript:void(0)" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg>更多 ▾</a>
+          <div class="more-dropdown">
+            <a href="/qingyan-blog/">友链</a>
+            <a href="/qingyan-blog/">订阅</a>
+            <a href="/qingyan-blog/">归档</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
 <div class="sakura-container" id="sakuraContainer"></div>
 
 
@@ -320,7 +439,7 @@ body { animation: pageFadeIn 0.8s ease-out; }
     </div>
     
     <!-- 温馨提示 -->
-    <div style="text-align: center; padding: 20px; color: #7dd3fc; font-size: 13px; background: rgba(125, 211, 252, 0.1); border-radius: 12px; margin-top: 20px;">
+    <div style="text-align: center; padding: 20px; color: #f9a8d4; font-size: 13px; background: rgba(251, 207, 232, 0.2); border-radius: 12px; margin-top: 20px;">
         💡 点击播放按钮开始听歌，支持列表循环、随机播放、音量调节哦～
     </div>
 </div>
@@ -417,7 +536,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         container: document.getElementById('aplayer-container'),
                         mini: false,
                         autoplay: false,
-                        theme: '#38bdf8',
+                        theme: '#fb7185',
                         loop: 'all',
                         order: 'list',
                         preload: 'auto',
